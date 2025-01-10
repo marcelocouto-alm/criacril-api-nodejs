@@ -1,0 +1,30 @@
+POST http://localhost:3333/product
+Content-Type: application/json
+
+{
+    "title": "Produto teste",
+    "description": "Descrição teste",
+    "imageUrl": "urlDaImagem",
+    "height": 1.80,
+    "width": 1.50,
+    "price": 0.01
+}
+
+###
+GET http://localhost:3333/products?search=
+
+###
+PUT http://localhost:3333/product/51a8b3b7-27c5-4e84-a83a-e64e8739de9f
+Content-Type: application/json
+
+{
+    "title": "asfafa",
+    "description": "asfsafs",
+    "imageUrl": "saasff.org",
+    "height": 3.00,
+    "width": 0.50,
+    "price": 10.00
+}
+
+### 
+DELETE http://localhost:3333/product/51a8b3b7-27c5-4e84-a83a-e64e8739de9f
