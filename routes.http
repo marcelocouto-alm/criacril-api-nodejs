@@ -1,4 +1,4 @@
-POST http://localhost:3333/product
+POST https://criacril-api-nodejs.onrender.com/product
 Content-Type: application/json
 
 {
@@ -11,10 +11,10 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3333/products?search=
+GET https://criacril-api-nodejs.onrender.com/products?search=
 
 ###
-PUT http://localhost:3333/product/51a8b3b7-27c5-4e84-a83a-e64e8739de9f
+PUT https://criacril-api-nodejs.onrender.com/product/e1d7d926-c991-44b6-9581-2f91cad7ffe6
 Content-Type: application/json
 
 {
@@ -27,4 +27,4 @@ Content-Type: application/json
 }
 
 ### 
-DELETE http://localhost:3333/product/51a8b3b7-27c5-4e84-a83a-e64e8739de9f
+DELETE https://criacril-api-nodejs.onrender.com/product/9fb82847-756d-4e47-af69-771d2c2c1f4d
