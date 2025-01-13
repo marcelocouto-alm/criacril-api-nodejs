@@ -1,25 +1,16 @@
 import { fastify } from 'fastify';
-import { DataBasePostgres } from './database-postgres.js';
+import { DataBasePostgres } from './src/database/database-postgres.js';
 
 const server = fastify();
 const database = new DataBasePostgres();
 
 server.post('/product', async (request, response) => {
   try {
-    const { title, description, imageUrl, height, width, price } = request.body;
-
-    await database.create({
-      title,
-      description,
-      imageUrl,
-      height,
-      width,
-      price,
-    });
+    await database.create(request.body);
 
     return response.status(201).send({ message: 'Product created successfully.' });
   } catch (error) {
-    console.error('Error creating product:', error);
+    console.error('Error creating product:', error.message);
     return response.status(500).send({ error: 'Failed to create product.' });
   }
 });
@@ -37,22 +28,19 @@ server.get('/products', async (request, response) => {
 });
 
 server.put('/product/:id', async (request, response) => {
-  try {
-    const productId = request.params.id;
-    const { title, description, imageUrl, height, width, price } = request.body;
+  let productId;
 
-    await database.update(productId, {
-      title,
-      description,
-      imageUrl,
-      height,
-      width,
-      price,
-    });
+  try {
+    productId = request.params.id;
+    const rowsUpdated = await database.update(productId, request.body);
+
+    if (rowsUpdated === 0) {
+      return response.status(404).send({ error: 'Product not found.' });
+    }
 
     return response.status(200).send({ message: 'Product updated successfully.' });
   } catch (error) {
-    console.error(`Error updating product with ID ${request.params.id}:`, error);
+    console.error(`Error updating product with ID ${productId || 'unknown'}:`, error.message);
     return response.status(500).send({ error: 'Failed to update product.' });
   }
 });
@@ -77,4 +65,4 @@ server.delete('/product/:id', async (request, reply) => {
 server.listen({
   host: '0.0.0.0',
   port: process.env.PORT ?? 3333,
-})
+});

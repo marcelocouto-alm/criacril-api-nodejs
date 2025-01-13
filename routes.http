@@ -2,7 +2,7 @@ POST https://criacril-api-nodejs.onrender.com/product
 Content-Type: application/json
 
 {
-    "title": "Produto teste",
+    "title": "Agora foi mlk",
     "description": "Descrição teste",
     "imageUrl": "urlDaImagem",
     "height": 1.80,
@@ -11,14 +11,14 @@ Content-Type: application/json
 }
 
 ###
-GET https://criacril-api-nodejs.onrender.com/products?search=
+GET https://criacril-api-nodejs.onrender.com/products?search=produto
 
 ###
-PUT https://criacril-api-nodejs.onrender.com/product/e1d7d926-c991-44b6-9581-2f91cad7ffe6
+PUT https://criacril-api-nodejs.onrender.com/product/4aaa4d91-1e00-4346-a9b4-15da28a0ca21
 Content-Type: application/json
 
 {
-    "title": "asfafa",
+    "title": "agora foi atualizado mlk",
     "description": "asfsafs",
     "imageUrl": "saasff.org",
     "height": 3.00,
@@ -27,4 +27,4 @@ Content-Type: application/json
 }
 
 ### 
-DELETE https://criacril-api-nodejs.onrender.com/product/9fb82847-756d-4e47-af69-771d2c2c1f4d
+DELETE https://criacril-api-nodejs.onrender.com/product/4aaa4d91-1e00-4346-a9b4-15da28a0ca21
