@@ -1,16 +1,35 @@
 import { fastify } from 'fastify';
 import { DataBasePostgres } from './src/database/database-postgres.js';
+import { uploadImageToImgBB } from './src/services/imgbb-service.js'
 
 const server = fastify();
 const database = new DataBasePostgres();
 
 server.post('/product', async (request, response) => {
   try {
-    await database.create(request.body);
+    const { imageUrl, ...rest } = request.body;
 
-    return response.status(201).send({ message: 'Product created successfully.' });
+    if (!imageUrl) {
+      return response.status(400).send({ error: 'No image provided' });
+    }
+
+    // Extrair o conteúdo da base64 (removendo o prefixo "data:image/png;base64,")
+    const base64Data = imageUrl.replace(/^data:image\/\w+;base64,/, '');
+
+    // Chamar a função para fazer upload da imagem para o ImgBB
+    const imageUrlUploaded = await uploadImageToImgBB(base64Data);
+
+    const product = await database.create({
+      imageUrl: imageUrlUploaded,
+      ...rest
+    });
+
+    return response.status(201).send({
+      message: 'Product created successfully.',
+      product
+    });
   } catch (error) {
-    console.error('Error creating product:', error.message);
+    console.error('Error handling file upload or product creation:', error);
     return response.status(500).send({ error: 'Failed to create product.' });
   }
 });
