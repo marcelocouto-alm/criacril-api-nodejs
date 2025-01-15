@@ -1,7 +1,7 @@
-import { sql } from '../database/db.js';
-import { Product } from '../models/Product.js';
+import { sql } from '../db.js';
+import { Product } from '../../models/Product.js';
 
-export class DataBasePostgres {
+export class ProductsRepository {
   async list(search = '') {
     const query = search
       ? await sql`SELECT * FROM products WHERE title ILIKE ${'%' + search + '%'}`

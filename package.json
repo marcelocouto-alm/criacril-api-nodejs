@@ -16,6 +16,7 @@
     "axios": "^1.7.9",
     "buffer": "^6.0.3",
     "fastify": "^5.2.1",
+    "fastify-jwt": "^4.2.0",
     "postgres": "^3.4.5"
   },
   "devDependencies": {

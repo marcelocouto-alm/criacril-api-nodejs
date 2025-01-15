@@ -1,10 +1,10 @@
-import { sql } from './db.js';
+import { sql } from '../db.js';
 
 sql`
   CREATE TABLE Users (
     Id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     Username VARCHAR(50) NOT NULL UNIQUE,
-    PasswordHash VARCHAR(255) NOT NULL,
+    Password VARCHAR(255) NOT NULL,
     Email VARCHAR(100) NOT NULL UNIQUE,
     CreatedAt TIMESTAMPTZ DEFAULT NOW() NOT NULL,
     UpdatedAt TIMESTAMPTZ DEFAULT NOW() NOT NULL
