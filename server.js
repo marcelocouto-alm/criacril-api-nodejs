@@ -51,13 +51,29 @@ server.put('/product/:id', async (request, response) => {
 
   try {
     productId = request.params.id;
-    const rowsUpdated = await database.update(productId, request.body);
+
+    const { imageUrl, ...rest } = request.body;
+
+    if (!imageUrl) {
+      return response.status(400).send({ error: 'No image provided' });
+    }
+
+    const base64Data = imageUrl.replace(/^data:image\/\w+;base64,/, '');
+    const imageUrlUploaded = await uploadImageToImgBB(base64Data);
+
+    const rowsUpdated = await database.update(productId, {
+      imageUrl: imageUrlUploaded,
+      ...rest
+    });
 
     if (rowsUpdated === 0) {
       return response.status(404).send({ error: 'Product not found.' });
     }
 
-    return response.status(200).send({ message: 'Product updated successfully.' });
+    return response.status(200).send({
+      message: 'Product updated successfully.',
+      productId
+    });
   } catch (error) {
     console.error(`Error updating product with ID ${productId || 'unknown'}:`, error.message);
     return response.status(500).send({ error: 'Failed to update product.' });

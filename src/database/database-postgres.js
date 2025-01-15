@@ -11,7 +11,7 @@ export class DataBasePostgres {
 
   async create(data) {
     const product = new Product(data);
-    console.log(product);
+
     await sql`
     INSERT INTO Products (Title, Description, ImageUrl, Height, Width, Price)
     VALUES (
