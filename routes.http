@@ -12,6 +12,7 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3333/products?search=
+Authorization: Bearer 
 
 ###
 PUT http://localhost:3333/product/78b00cd1-2e71-4d3d-824b-d568162db079
