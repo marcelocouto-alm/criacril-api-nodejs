@@ -16,6 +16,7 @@ GET http://localhost:3333/products?search=
 ###
 PUT http://localhost:3333/product/78b00cd1-2e71-4d3d-824b-d568162db079
 Content-Type: application/json
+
 {
     "title": "Produto azul",
     "description": "Descrição teste",
@@ -33,23 +34,32 @@ POST http://localhost:3333/user
 Content-Type: application/json
 
 {
-    "username": "Jose Paulo",
-    "email": "josepaulo@teste.com",
-    "password": "senhateste"
+    "username": "Carlos Ruiz",
+    "email": "carlosruiz@teste.com",
+    "password": "senhateste123"
 }
 
 ###
 GET http://localhost:3333/users?search=
 
 ###
-PUT http://localhost:3333/user/78b00cd1-2e71-4d3d-824b-d568162db079
+PUT http://localhost:3333/user/6374d92b-1c15-4201-9b77-9fb0dbdbc319
 Content-Type: application/json
 
 {
-    "username": "Jose Paulo",
-    "email": "josepaulo@teste.com",
-    "password": "senhateste"
+    "username": "Carlos Ruiz Lopes",
+    "email": "carlosruiz10@teste.com",
+    "password": "senhateste1234"
 }
 
 ### 
-DELETE http://localhost:3333/user/76b7881b-0bce-4dc4-b1f5-e1bc9db2b43b
+DELETE http://localhost:3333/user/6374d92b-1c15-4201-9b77-9fb0dbdbc319
+
+###
+POST http://localhost:3333/login
+Content-Type: application/json
+
+{
+    "email": "josepaulo@teste.com",
+    "password": "senhateste"
+}

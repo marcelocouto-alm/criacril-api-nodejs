@@ -1,6 +1,5 @@
 import { ProductsRepository } from '../database/products/products-repository.js';
 import { uploadImageToImgBB } from '../services/imgbb-service.js';
-import authHook from '../middlewares/auth-hook.js';
 
 const database = new ProductsRepository();
 

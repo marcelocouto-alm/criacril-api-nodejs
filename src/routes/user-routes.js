@@ -1,17 +1,12 @@
-import fastifyPlugin from 'fastify-plugin';
 import { UsersRepository } from '../database/users/users-repository.js';
 import bcrypt from 'bcrypt';
 
 const database = new UsersRepository();
 
-const authRoutes = async (server, options) => {
+const userRoutes = async (server, options) => {
   server.post('/user', async (request, response) => {
     try {
       const { username, email, password } = request.body;
-
-      if (!username || !email || !password) {
-        return response.status(400).send({ error: 'Username, email, and password are required.' });
-      }
 
       // Gera um hash da senha
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -79,4 +74,4 @@ const authRoutes = async (server, options) => {
   });
 };
 
-export default fastifyPlugin(authRoutes);
+export default userRoutes;

@@ -1,26 +1,39 @@
 import fastifyPlugin from 'fastify-plugin';
 import { UsersRepository } from '../database/users/users-repository.js';
+import bcrypt from 'bcrypt';
 
 const database = new UsersRepository();
 
 const authRoutes = async (server, options) => {
-  const JWT_SECRET = process.env.AUTH_TOKEN_SECRET;
-
   server.post('/login', async (request, response) => {
-    const { username, password } = request.body;
+    try {
+      const { email, password } = request.body;
 
-    const user = { username: 'admin', password: 'senha123' };
+      if (!email || !password) {
+        return response.status(400).send({ error: 'Email and password are required.' });
+      }
 
-    if (username !== user.username || password !== user.password) {
-      return response.status(401).send({ error: 'Invalid credentials' });
+      const user = await database.findUserByEmail(email);
+
+      if (!user) {
+        return response.status(401).send({ error: 'Invalid email or password.' });
+      }
+
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+
+      if (!isPasswordValid) {
+        return response.status(401).send({ error: 'Invalid email or password.' });
+      }
+
+      // Gera um token JWT
+      const token = server.jwt.sign({ username: user.username });
+
+      return response.send({ message: 'Login successful.', token });
+    } catch (error) {
+      console.error('Error during login:', error);
+      return response.status(500).send({ error: 'Failed to log in.' });
     }
-
-    // Gerar o token JWT
-    const token = server.jwt.sign({ username: user.username });
-
-    return response.send({ token });
   });
-
 };
 
 export default fastifyPlugin(authRoutes);
