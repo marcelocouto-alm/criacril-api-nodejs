@@ -4,7 +4,7 @@ import { User } from '../../models/User.js';
 export class UsersRepository {
   async list(search = '') {
     const query = search
-      ? await sql`SELECT * FROM users WHERE title ILIKE ${'%' + search + '%'}`
+      ? await sql`SELECT * FROM users WHERE username ILIKE ${'%' + search + '%'}`
       : await sql`SELECT * FROM users`;
     return query;
   }
