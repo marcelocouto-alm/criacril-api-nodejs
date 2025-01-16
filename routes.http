@@ -1,5 +1,6 @@
 POST http://localhost:3333/product
 Content-Type: application/json
+
 {
     "title": "Produto vermelho",
     "description": "Descrição teste",
@@ -28,8 +29,9 @@ Content-Type: application/json
 DELETE http://localhost:3333/product/0f128eac-9bb9-4cab-b4fe-7ed83999787a
 
 ###
-POST http://localhost:3333/login
+POST http://localhost:3333/user
 Content-Type: application/json
+
 {
     "username": "Jose Paulo",
     "email": "josepaulo@teste.com",
@@ -37,11 +39,12 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3333/login?search=
+GET http://localhost:3333/users?search=
 
 ###
-PUT http://localhost:3333/login/78b00cd1-2e71-4d3d-824b-d568162db079
+PUT http://localhost:3333/user/78b00cd1-2e71-4d3d-824b-d568162db079
 Content-Type: application/json
+
 {
     "username": "Jose Paulo",
     "email": "josepaulo@teste.com",
@@ -49,4 +52,4 @@ Content-Type: application/json
 }
 
 ### 
-DELETE http://localhost:3333/login/76b7881b-0bce-4dc4-b1f5-e1bc9db2b43b
+DELETE http://localhost:3333/user/76b7881b-0bce-4dc4-b1f5-e1bc9db2b43b
