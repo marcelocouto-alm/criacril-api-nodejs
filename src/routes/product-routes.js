@@ -80,20 +80,20 @@ const productRoutes = async (server, options) => {
     }
   });
 
-  server.delete('/product/:id', async (request, reply) => {
+  server.delete('/product/:id', async (request, response) => {
     try {
       const productId = request.params.id;
 
       const rowsDeleted = await database.delete(productId);
 
       if (rowsDeleted === 0) {
-        return reply.status(404).send({ error: 'Product not found.' });
+        return response.status(404).send({ error: 'Product not found.' });
       }
 
-      return reply.status(200).send({ message: 'Product deleted successfully.' });
+      return response.status(200).send({ message: 'Product deleted successfully.' });
     } catch (error) {
-      console.error(`Error deleting product with ID ${productId}:`, error);
-      return reply.status(500).send({ error: 'Failed to delete product.' });
+      console.error(error);
+      return response.status(500).send({ error: 'Failed to delete product.' });
     }
   });
 }
