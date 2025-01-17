@@ -1,24 +1,87 @@
-
 # Criacril API
 
 Este projeto é uma API desenvolvida com Fastify, que permite o gerenciamento de produtos. A API permite criar, listar, atualizar e excluir produtos, e também faz o upload de imagens para o ImgBB. A seguir, é fornecido um guia de como usar a API e informações sobre a configuração do projeto.
 
-## Funcionalidades
+## Recursos Principais
 
-A API tem os seguintes endpoints:
+- **Autenticação JWT**: Proteção para rotas.
+- **Gerenciamento de Produtos**: Criar, listar, atualizar e deletar produtos.
+- **Gerenciamento de Usuários**: Criar, listar, atualizar e deletar usuários.
+- **Upload de Imagens**: Integração com ImgBB para upload de imagens.
 
-- **POST /product**: Cria um novo produto, fazendo upload da imagem para o ImgBB.
-- **GET /products**: Lista todos os produtos cadastrados, com a opção de pesquisa pelo título.
-- **PUT /product/:id**: Atualiza um produto específico, incluindo o upload de uma nova imagem para o ImgBB.
-- **DELETE /product/:id**: Exclui um produto específico.
+---
+
+## Instalação
+
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/SeuUsuario/criacril-api.git
+   cd criacril-api
+   ```
+
+2. **Instale as dependências:**
+   ```bash
+   npm install
+   ```
+
+3. Crie o banco de dados PostgreSQL e as tabela de produtos e usuários. Os comandos SQL para criar as tabelas estão incluídos nos arquivos `create-products-table.js` e `create-users-table.js`.
+
+4. **Configure o ambiente:**
+   Crie um arquivo `.env` na raiz do projeto e configure as variáveis:
+   ```env
+   AUTH_TOKEN_SECRET=seu_segredo
+   DATABASE_URL=sua_url_do_banco_de_dados
+   IMG_BB_API_KEY=sua_chave_do_imgbb
+   PORT=3333
+   ```
+
+---
+
+## Estrutura do Projeto
+
+```
+criacril-api/
+├── src/
+│   ├── config/
+│   │   └── authConfig.js
+│   ├── database/
+│   │   ├── products/
+│   │   │   ├── create-products-table.js
+│   │   │   └── products-repository.js
+│   │   ├── users/
+│   │   │   ├── create-users-table.js
+│   │   │   └── users-repository.js
+│   │   └── db.js
+│   ├── middlewares/
+│   │   └── authHook.js
+│   ├── models/
+│   │   ├── Product.js
+│   │   └── User.js
+│   ├── routes/
+│   │   ├── auth-routes.js
+│   │   ├── product-routes.js
+│   │   └── user-routes.js
+│   └── services/
+│       └── imgbb-service.js
+├── .env
+├── .gitignore
+├── package-lock.json
+├── package.json
+├── README.md
+├── routes.http
+└── server.js
+```
+
+---
 
 ## Requisitos
 
 Antes de rodar o projeto, você precisa garantir que tenha o seguinte instalado:
 
 - Node.js (v18 ou superior)
-- PostgreSQL
 - Uma chave de API para o ImgBB (você pode obter em [ImgBB](https://imgbb.com))
+
+---
 
 ## Serviços Utilizados
 
@@ -30,152 +93,120 @@ Para upload de imagens, a API utiliza o serviço ImgBB. A imagem é enviada em f
 - Dependências:
   - axios
 
+---
+
+## Rotas Disponíveis
+
+### Autenticação
+
+- **Login**:
+  ```http
+  POST /login
+  Content-Type: application/json
+  {
+    "email": "exemplo@teste.com",
+    "password": "sua_senha"
+  }
+  ```
+
+### Produtos
+
+- **Criar Produto**:
+  ```http
+  POST /product
+  Content-Type: application/json
+  Authorization: Bearer <seu_token>
+  {
+    "title": "Produto Teste",
+    "description": "Descrição do produto",
+    "imageUrl": "iVBOR...",
+    "height": 1.80,
+    "width": 1.50,
+    "price": 10.99
+  }
+  ```
+- **Listar Produtos**:
+  ```http
+  GET /products?search=
+  Authorization: Bearer <seu_token>
+  ```
+- **Atualizar Produto**:
+  ```http
+  PUT /product/:id
+  Content-Type: application/json
+  Authorization: Bearer <seu_token>
+  {
+    "title": "Produto Atualizado",
+    "description": "Descrição atualizada",
+    "imageUrl": "iVBOR...",
+    "height": 2.00,
+    "width": 1.60,
+    "price": 15.99
+  }
+  ```
+- **Deletar Produto**:
+  ```http
+  DELETE /product/:id
+  Authorization: Bearer <seu_token>
+  ```
+
+### Usuários
+
+- **Criar Usuário**:
+  ```http
+  POST /user
+  Content-Type: application/json
+  {
+    "username": "usuario_teste",
+    "email": "exemplo@teste.com",
+    "password": "senha"
+  }
+  ```
+- **Listar Usuários**:
+  ```http
+  GET /users?search=
+  Authorization: Bearer <seu_token>
+  ```
+- **Atualizar Usuário**:
+  ```http
+  PUT /user/:id
+  Content-Type: application/json
+  Authorization: Bearer <seu_token>
+  {
+    "username": "usuario_atualizado",
+    "email": "atualizado@teste.com",
+    "password": "nova_senha"
+  }
+  ```
+- **Deletar Usuário**:
+  ```http
+  DELETE /user/:id
+  Authorization: Bearer <seu_token>
+  ```
+
+---
+
+## Rodando o Projeto
+
+1. **Inicie o servidor:**
+   ```bash
+   npm start
+   ```
+
+2. **Acesse o servidor:**
+   O servidor será iniciado em `http://localhost:3333`.
+
+---
+
 ## Dependências
 
-- Fastify: Framework web para Node.js.
-- Postgres: Cliente PostgreSQL.
-- Axios: Para chamadas HTTP (ex.: upload de imagens para o ImgBB).
-- Dotenv: Gerenciamento de variáveis de ambiente.
+- **Axios**: Cliente HTTP para realizar requisições.
+- **Bcrypt**: Biblioteca para hash e verificação de senhas.
+- **Buffer**: Manipulação de dados binários no Node.js.
+- **Dotenv**: Carrega variáveis de ambiente a partir de arquivos .env.
+- **Fastify**: Framework web.
+- **Fastify-JWT**: Gerenciamento de autenticação.
+- **Postgres**: Conexão com banco de dados.
 
-## Instalação
+Para ver a lista completa, consulte o arquivo `package.json`.
 
-1. Clone este repositório:
-
-```bash
-git clone https://github.com/SeuUsuario/criacril-api.git
-```
-
-2. Navegue até o diretório do projeto:
-
-```bash
-cd criacril-api
-```
-
-3. Instale as dependências:
-
-```bash
-npm install
-```
-
-4. Crie o banco de dados PostgreSQL e a tabela de produtos. O comando SQL para criar a tabela está incluído no arquivo de inicialização.
-
-5. Defina a variável de ambiente `IMG_BB_API_KEY` com sua chave de API ImgBB. Você pode configurar essa variável no arquivo `.env`:
-
-```bash
-IMG_BB_API_KEY=SuaChaveDeAPI
-```
-
-6. Inicie o servidor:
-
-```bash
-npm start
-```
-
-O servidor estará disponível em `http://localhost:3333`.
-
-## Como Usar
-
-### 1. Criar um Produto
-
-Requisição: `POST /product`
-
-Corpo da Requisição:
-```json
-{
-  "title": "Produto Exemplo",
-  "description": "Descrição do produto.",
-  "imageUrl": "data:image/png;base64,...",
-  "height": 10.5,
-  "width": 20.3,
-  "price": 100.0
-}
-```
-
-Resposta de Sucesso:
-```json
-{
-  "message": "Product created successfully.",
-  "product": {
-    "id": "UUID-do-produto",
-    "title": "Produto Exemplo",
-    "description": "Descrição do produto.",
-    "imageUrl": "URL-da-imagem-uploadada",
-    "height": 10.5,
-    "width": 20.3,
-    "price": 100.0
-  }
-}
-```
-
-### 2. Listar Produtos
-
-Requisição: `GET /products?search=Produto`
-
-Resposta de Sucesso:
-```json
-[
-  {
-    "id": "UUID-do-produto",
-    "title": "Produto Exemplo",
-    "description": "Descrição do produto.",
-    "imageUrl": "URL-da-imagem-uploadada",
-    "height": 10.5,
-    "width": 20.3,
-    "price": 100.0
-  }
-]
-```
-
-### 3. Atualizar um Produto
-
-Requisição: `PUT /product/:id`
-
-Corpo da Requisição:
-```json
-{
-  "title": "Produto Atualizado",
-  "description": "Nova descrição.",
-  "imageUrl": "data:image/png;base64,...",
-  "height": 12.5,
-  "width": 22.3,
-  "price": 120.0
-}
-```
-
-Resposta de Sucesso:
-```json
-{
-  "message": "Product updated successfully.",
-  "productId": "UUID-do-produto"
-}
-```
-
-### 4. Excluir um Produto
-
-Requisição: `DELETE /product/:id`
-
-Resposta de Sucesso:
-```json
-{
-  "message": "Product deleted successfully."
-}
-```
-
-## Estrutura de Arquivos
-
-O projeto possui a seguinte estrutura:
-
-```
-criacril-api/
-├── src/
-│   ├── database/
-│   │   └── database-postgres.js
-│   ├── models/
-│   │   └── Product.js
-│   ├── services/
-│   │   └── imgbb-service.js
-├── .env
-├── package.json
-├── README.md
-└── server.js
-```
