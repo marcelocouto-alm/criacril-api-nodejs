@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 
 const database = new UsersRepository();
 
-const userRoutes = async (server, options) => {
+const userRoutes = async (server) => {
   server.post('/user', async (request, response) => {
     try {
       const { username, email, password } = request.body;

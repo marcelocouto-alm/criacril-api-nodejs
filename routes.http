@@ -34,7 +34,7 @@ DELETE http://localhost:3333/product/id
 ###
 POST http://localhost:3333/user
 Content-Type: application/json
-Authorization: Bearer id
+Authorization: Bearer 
 
 {
     "username": "Teste",
@@ -45,12 +45,12 @@ Authorization: Bearer id
 ###
 GET http://localhost:3333/users?search=
 Content-Type: application/json
-Authorization: Bearer id
+Authorization: Bearer 
 
 ###
 PUT http://localhost:3333/user/id
 Content-Type: application/json
-Authorization: Bearer id
+Authorization: Bearer 
 
 {
     "username": "Teste",
@@ -60,7 +60,7 @@ Authorization: Bearer id
 
 ### 
 DELETE http://localhost:3333/user/id
-Authorization: Bearer id
+Authorization: Bearer 
 
 ###
 POST http://localhost:3333/login

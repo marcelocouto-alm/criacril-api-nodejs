@@ -3,7 +3,7 @@ import { uploadImageToImgBB } from '../services/imgbb-service.js';
 
 const database = new ProductsRepository();
 
-const productRoutes = async (server, options) => {
+const productRoutes = async (server) => {
   server.post('/product', async (request, response) => {
     try {
       const { imageUrl, ...rest } = request.body;
