@@ -1,10 +1,11 @@
 POST http://localhost:3333/product
 Content-Type: application/json
+Authorization: Bearer 
 
 {
-    "title": "Produto vermelho",
+    "title": "Produto teste",
     "description": "Descrição teste",
-    "imageUrl": "iVBORw...",
+    "imageUrl": "iVBO...",
     "height": 1.80,
     "width": 1.50,
     "price": 0.01
@@ -15,7 +16,7 @@ GET http://localhost:3333/products?search=
 Authorization: Bearer 
 
 ###
-PUT http://localhost:3333/product/78b00cd1-2e71-4d3d-824b-d568162db079
+PUT http://localhost:3333/product/id
 Content-Type: application/json
 
 {
@@ -28,39 +29,44 @@ Content-Type: application/json
 }
 
 ### 
-DELETE http://localhost:3333/product/0f128eac-9bb9-4cab-b4fe-7ed83999787a
+DELETE http://localhost:3333/product/id
 
 ###
 POST http://localhost:3333/user
 Content-Type: application/json
+Authorization: Bearer id
 
 {
-    "username": "Carlos Ruiz",
-    "email": "carlosruiz@teste.com",
-    "password": "senhateste123"
+    "username": "Teste",
+    "email": "teste@teste.com",
+    "password": "teste"
 }
 
 ###
 GET http://localhost:3333/users?search=
+Content-Type: application/json
+Authorization: Bearer id
 
 ###
-PUT http://localhost:3333/user/6374d92b-1c15-4201-9b77-9fb0dbdbc319
+PUT http://localhost:3333/user/id
 Content-Type: application/json
+Authorization: Bearer id
 
 {
-    "username": "Carlos Ruiz Lopes",
-    "email": "carlosruiz10@teste.com",
-    "password": "senhateste1234"
+    "username": "Teste",
+    "email": "teste@teste.com",
+    "password": "teste"
 }
 
 ### 
-DELETE http://localhost:3333/user/6374d92b-1c15-4201-9b77-9fb0dbdbc319
+DELETE http://localhost:3333/user/id
+Authorization: Bearer id
 
 ###
 POST http://localhost:3333/login
 Content-Type: application/json
 
 {
-    "email": "josepaulo@teste.com",
-    "password": "senhateste"
+    "email": "teste@teste.com",
+    "password": "teste"
 }

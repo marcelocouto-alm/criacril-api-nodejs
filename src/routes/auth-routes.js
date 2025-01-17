@@ -25,8 +25,10 @@ const authRoutes = async (server, options) => {
         return response.status(401).send({ error: 'Invalid email or password.' });
       }
 
-      // Gera um token JWT
-      const token = server.jwt.sign({ username: user.username });
+      const token = server.jwt.sign(
+        { username: user.username },
+        { expiresIn: '7d' }
+      );
 
       return response.send({ message: 'Login successful.', token });
     } catch (error) {

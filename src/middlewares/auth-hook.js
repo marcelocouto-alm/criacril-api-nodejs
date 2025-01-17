@@ -8,7 +8,7 @@ const authHook = async (request, reply) => {
 
     if (request.headers.authorization) {
       const token = request.headers.authorization.split(' ')[1];
-      request.user = await request.server.jwt.verify(token); // Verifica e decodifica
+      request.user = await request.server.jwt.verify(token);
     } else {
       return reply.status(401).send({ error: 'Access denied. Authentication is required to access this resource.' });
     }
